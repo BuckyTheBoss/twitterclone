@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}FakeIMDB Login{% endblock %}
+{% load crispy_forms_tags %}
+{% block content %}
+	<div class="container">
+		<div class="row">
+			<div class="col s2"></div>
+			<div class="col s8">
+			
+				<form method="POST">
+					{%csrf_token%}
+					{{form | crispy}}
+					<button type="submit" class="btn btn-outline-dark">submit</button>
+				</form>
+				<p>Don't have an account? <a href="{% url 'signup' %}">Click Here</a> to make one.</p>
+			</div>
+			<div class="col s2"></div>
+		</div>
+		
+	</div>
+{% endblock %}

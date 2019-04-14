@@ -1,0 +1,49 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Materialize CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+</head>
+<body>
+
+            
+
+  <title>{% block title %}{% endblock %}</title>
+  {% block nav %}
+
+<nav class="white">
+    <div class="nav-wrapper">
+      <a href="" class="brand-logo blue-text text-lighten-2 ">
+  <i class="material-icons">comment</i>
+            Twitter</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        
+        <li>{% if request.user.is_authenticated %}
+        <div class="navbar nav-item">
+          <span class="nav-item text-light font-weight-bold">{{ request.user.username | capfirst }}</span>
+        </div>
+          <li>
+          <a class="nav-item nav-link" href="{% url 'main_logout' %}">Log Out</a>
+        </li>
+      {% else %}
+        <a class="nav-item nav-link" href="{% url 'main_login' %}">Have an account? Log In</a>
+      {% endif %}</li>
+      </ul>
+    </div>
+  </nav>
+
+  {% endblock %}
+
+
+  {% block content %}{% endblock %}
+
+    </body>
+</html>
