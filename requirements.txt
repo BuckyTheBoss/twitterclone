@@ -2,3 +2,4 @@ Django==2.2
 Faker==1.0.4
 django-crispy-forms==1.7.2
 crispy-forms-materialize==0.2
+Pillow==6.0.0

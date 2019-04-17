@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}Twitter Profile{% endblock %}
+{% load crispy_forms_tags %}
+{% block content %}
+	<div class="nav-content blue-grey lighten-5">
+		<ul class="tabs tabs-transparent ">
+			<li class="tab"><a class="blue-text" href="#test1">Tweets</a></li>
+			<li class="tab active"><a class="blue-text" href="#test2">Following</a></li>
+			<li class="tab"><a class="blue-text" href="#test3">Followers</a></li>
+			
+		</ul>
+	</div>
+	<div class="container">
+		<div class="row">
+			<div class="col s3">
+				
+				<div class="card blue-grey lighten-5">
+					<div class="card-content">
+						<img class="circle responsive-img col s12" src="{{user.profile.img}}">
+						
+						<span class="card-title">{{user.first_name}} {{user.last_name}}</span><br>
+						<a class="mb3" href="{% url 'profile' request.user.username %}"><span class="card-title "><cite>@{{user.username}}</cite></span></a>
+						
+					</div>
+					<div class="card-action" style="height: 80px">
+						<div class="col s4">
+							<a class="blue-text card-links" href="{% url 'profile' user.username %}">Tweets <br> {{user.tweet_set.count}}</a>
+						</div>
+						<div class="col s4">
+							<a class="blue-text card-links" href="{% url 'profile_follows' user.username %}">Following<br>{{user.follower.count}}</a>
+						</div>
+						<div class="col s4">
+							<a class="blue-text card-links" href="{% url 'profile_followers' user.username %}">Followers<br>{{user.followee.count}}</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col s6">
+				
+				{% for record in records %}
+					<div class="card col s3">
+						<div class="card-image">
+							<img src="{{record.follower.profile.img}}">
+							<span class="card-title black-text" style="font-size: 13px">{{record.follower.first_name}} {{record.follower.last_name}}<br><a href="{% url 'profile' record.follower.username %}">@{{record.follower.username}}</a></span>
+						</div>
+						<div class="card-content">
+							<p>{{record.follower.profile.bio}}</p>
+						</div>
+						<div class="card-action">
+							{% if record.follower not in request.user.follower.all %}
+							<a class="btn" href="{% url 'follow' record.follower.id%}">Follow</a>
+							{% else %}
+							<a class="btn" href="{% url 'unfollow' record.follower.id%}">Unfollow</a>
+							{% endif %}
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+			<div class="col s3">
+			</div>
+			
+		</div>
+	</div>
+{% endblock %}

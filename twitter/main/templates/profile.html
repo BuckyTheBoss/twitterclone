@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block title %}Twitter Profile{% endblock %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="nav-content blue lighten-4">
+      <ul class="tabs tabs-transparent ">
+        <li class="tab active"><a class="blue-text" href="#test1">Tweets</a></li>
+        <li class="tab"><a class="blue-text" href="#test2">Following</a></li>
+        <li class="tab"><a class="blue-text" href="#test3">Followers</a></li>
+        
+
+      </ul>
+		{% if request.user.id != profile.user.id%}
+        	{% if follower %}
+        	<a href="{% url 'unfollow' profile.user.id %}" class="btn right">Unfollow</a>
+        	{% else %}
+        	<a href="{% url 'follow' profile.user.id %}" class="btn right">Follow</a>
+			{% endif%}
+		{% endif %}
+    </div>
+	<div class="container">
+		<div class="row">
+			<div class="col s3">
+				
+				<div class="card blue-grey lighten-5">
+					<div class="card-content">
+						<img class="circle responsive-img col s12" src="{{profile.user.profile.img}}">
+						
+						<span class="card-title">{{profile.user.first_name}} {{profile.user.last_name}}</span><br>
+						<a class="mb3" href="{% url 'profile' profile.user.username %}"><span class="card-title "><cite>@{{profile.user.username}}</cite></span></a>
+						
+					</div>
+					<div class="card-action" style="height: 80px">
+						<div class="col s4">
+							<a class="blue-text card-links" href="{% url 'profile' profile.user.username%}">Tweets <br> {{profile.user.tweet_set.count}}</a>
+						</div>
+						<div class="col s4">
+							<a class="blue-text card-links" href="{% url 'profile_follows' profile.user.username%}">Following<br>{{profile.user.follower.count}}</a>
+						</div>
+						<div class="col s4">
+							<a class="blue-text card-links" href="{% url 'profile_followers' profile.user.username%}">Followers<br>{{profile.user.followee.count}}</a>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+
+			<div class="col s6">
+				<div class="card blue lighten-5 mt3">
+					<div class="row valign-wrapper">
+						<img class="circle responsive-img col s2" src="{{profile.user.profile.img}}">
+						<form class="col s9">
+							<div class="input-field">
+								<input id="search" type="search" placeholder="What's on your mind?" required>
+								<label for="search"></label>
+							</div>
+						</form>
+						<div class="col s1"></div>
+					</div>
+					
+					
+				</div>
+				{% for tweet in profile.user.tweet_set.all %}
+					<div class="card  blue-grey lighten-5">
+						<div class="card-content ">
+							<h6> {{tweet.user.first_name}} {{tweet.user.last_name}} <cite> <a href="{% url 'profile' tweet.user.username%}">@{{tweet.user.username}}</a> &bull; {{tweet.timestamp | timesince}}</cite></h6>
+							<p>{{tweet.content}}</p>
+						</div>
+						<div class="card-action mt ">
+							<a class="blue-text" href="{% url 'tweet' tweet.id %}"><i class="material-icons">comment</i> {{tweet.tweetcomment_set.count}}</a>
+							<a class="blue-text" href="#"><i class="material-icons">loop</i></a>
+							<a class="blue-text" href="#"><i class="material-icons">favorite_border</i></a>
+							<a class="blue-text" href="#"><i class="material-icons">mail_outline</i></a>
+						</div>
+					</div>
+				{% endfor %}
+<!-- 				<img class="mt3 mb3  img-responsive" src="{{profile.img}}">
+				<form class="mt3" method="post" enctype="multipart/form-data">
+					{% csrf_token %}
+					<input type="file" name="profile_pic"><br>
+					<button type="submit">upload</button>
+				</form> -->
+			</div>
+			<div class="col s3">
+			</div>
+			
+		</div>
+	</div>
+{% endblock %}

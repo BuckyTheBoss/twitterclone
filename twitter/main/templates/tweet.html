@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Twitter Profile{% endblock %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+    </div>
+	<div class="container">
+		<div class="row">
+			<div class="col s3">
+				
+
+			</div>
+
+
+
+			<div class="col s6">
+				
+				<div class="card  blue-grey lighten-5">
+						<div class="card-content ">
+							<h6> {{tweet.user.first_name}} {{tweet.user.last_name}} <cite> <a href="{% url 'profile' tweet.user.username%}">@{{tweet.user.username}}</a> &bull; {{tweet.timestamp | timesince}}</cite></h6>
+							<p>{{tweet.content}}</p>
+						</div>
+						<div class="card-action mt ">
+							<a class="blue-text" href="{% url 'tweet' tweet.id %}"><i class="material-icons">comment</i> {{tweet.tweetcomment_set.count}}</a>
+							<a class="blue-text" href="#"><i class="material-icons">loop</i></a>
+							<a class="blue-text" href="#"><i class="material-icons">favorite_border</i></a>
+							{% if tweet.user != request.user %}
+							<a class="blue-text" href="#"><i class="material-icons">mail_outline</i></a>
+							{% endif %}
+						</div>
+					</div>
+
+				{% for comment in tweet.tweetcomment_set.all %}
+					<div class="card  blue-grey lighten-5">
+						<div class="card-content ">
+							<h6> {{comment.user.first_name}} {{comment.user.last_name}} <cite> <a href="{% url 'profile' comment.user.username%}">@{{comment.user.username}}</a> &bull; {{comment.timestamp | timesince}}</cite></h6>
+							<p>{{comment.content}}</p>
+						</div>
+						<div class="card-action mt ">
+							<a class="blue-text" href="#"><i class="material-icons">favorite_border</i></a>
+							<a class="blue-text" href="#"><i class="material-icons">mail_outline</i></a>
+						</div>
+					</div>
+				{% endfor %}
+<!-- 				<img class="mt3 mb3  img-responsive" src="{{profile.img}}">
+				<form class="mt3" method="post" enctype="multipart/form-data">
+					{% csrf_token %}
+					<input type="file" name="profile_pic"><br>
+					<button type="submit">upload</button>
+				</form> -->
+			</div>
+			<div class="col s3">
+			</div>
+			
+		</div>
+	</div>
+{% endblock %}

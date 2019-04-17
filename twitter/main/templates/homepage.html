@@ -2,31 +2,64 @@
 {% block title %}FakeIMDB Login{% endblock %}
 {% load crispy_forms_tags %}
 {% block content %}
-<div class="container">
-	<div class="row">
-		<div class="col s2"></div>
-		<div class="col s8">
-			<h3>tweets</h3>
-			{% for tweet in tweets %}
-
-					<div class="card large blue-grey darken-1">
-						<div class="card-content white-text">
-							<span class="card-title">Card Title</span>
-							<p>I am a very simple card. I am good at containing small bits of information.
-								I am convenient because I require little markup to use effectively.</p>
+	<div class="container">
+		<div class="row">
+			<div class="col s3">
+				
+				<div class="card blue-grey lighten-5">
+					<div class="card-content">
+						<img class="circle responsive-img col s12" src="{{request.user.profile.img}}">
+						<span class="card-title">{{request.user.first_name}} {{request.user.last_name}}</span><br>
+						<a class="mb3" href="{% url 'profile' request.user.username %}"><span class="card-title "><cite>@{{request.user.username}}</cite></span></a>
+						
+					</div>
+					<div class="card-content" style="height: 80px">
+						<div class="col s4">
+							<a class="blue-text card-links" href="{% url 'profile' request.user.username %}">Tweets <br> {{request.user.tweet_set.count}}</a>
 						</div>
-						<div class="card-action">
-							<a href="#">This is a link</a>
+						<div class="col s4">
+							<a class="blue-text card-links" href="{% url 'profile_follows' request.user.username %}">Following<br>{{request.user.follower.count}}</a>
+						</div>
+						<div class="col s4">
+							<a class="blue-text card-links" href="{% url 'profile_followers' request.user.username %}">Followers<br>{{request.user.followee.count}}</a>
 						</div>
 					</div>
-
-			{% endfor %}
+				</div>
+				
+			</div>
+			<div class="col s6">
+				<div class="card blue lighten-5 mt3">
+					<div class="row valign-wrapper">
+						<img class="circle responsive-img col s2" src="{{request.user.profile.img}}">
+						<form class="col s9">
+							<div class="input-field">
+								<input id="search" type="search" placeholder="What's on your mind?" required>
+								<label for="search"></label>
+							</div>
+						</form>
+						<div class="col s1"></div>
+					</div>
+					
+					
+				</div>
+				{% for tweet in tweets %}
+					<div class="card  blue-grey lighten-5">
+						<div class="card-content ">
+							<h6> {{tweet.user.first_name}} {{tweet.user.last_name}} <cite> <a href="{% url 'profile' tweet.user.username%}">@{{tweet.user.username}}</a> &bull; {{tweet.timestamp | timesince}}</cite></h6>
+							<p>{{tweet.content}}</p>
+						</div>
+						<div class="card-action mt ">
+							<a class="blue-text" href="{% url 'tweet' tweet.id %}"><i class="material-icons">comment</i> {{tweet.tweetcomment_set.count}}</a>
+							<a class="blue-text" href="#"><i class="material-icons">loop</i></a>
+							<a class="blue-text" href="#"><i class="material-icons">favorite_border</i></a>
+							<a class="blue-text" href="#"><i class="material-icons">mail_outline</i></a>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+			<div class="col s3">
+			</div>
+			
 		</div>
-		<div class="col s2"></div>
-		
 	</div>
-</div>
-
-
-
 {% endblock %}

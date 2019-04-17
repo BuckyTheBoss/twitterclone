@@ -2,36 +2,36 @@
 {% block title %}Twitter{% endblock %}
 {% load crispy_forms_tags %}
 {% block content %}
-		<div class="row ">
-			<div class="col s6 center-align" style="background: #1da1f2; height: 900px;">
-				<ul class="white-text ">
-					<li><h6><i class="material-icons">search</i> Follow your interests. </h6></li>
-					<li><h6><i class="material-icons">people_outline</i> Hear what people are talking about. </h6></li>
-					<li><h6><i class="material-icons">comment</i> Join the conversation. </h6></li>
-				</ul>
-			</div>
-			<div class="col s6">
-				<div class="row">
-					<div class="col s4"></div>
-					<div class="col s6">
-				<form method="post">
-					{% csrf_token %}
-					<div class="row">
-						<div class="input-field col s5">
-							<input name="username" id="username" type="text" class="validate">
-							<label for="username">Username</label>
+	<div class="row ">
+		<div class="col s6 center-align" style="background: #1da1f2; height: 900px;">
+			<ul class="white-text ">
+				<li><h6><i class="material-icons">search</i> Follow your interests. </h6></li>
+				<li><h6><i class="material-icons">people_outline</i> Hear what people are talking about. </h6></li>
+				<li><h6><i class="material-icons">comment</i> Join the conversation. </h6></li>
+			</ul>
+		</div>
+		<div class="col s6">
+			<div class="row">
+				<div class="col s4"></div>
+				<div class="col s6">
+					<form method="post" action="{% url 'main_login' %}">
+						{% csrf_token %}
+						<div class="row">
+							<div class="input-field col s5">
+								<input name="username" id="username" type="text" class="validate">
+								<label for="username">Username</label>
+							</div>
+							<div class="input-field col s5">
+								<input name="password" id="password" type="password" class="validate">
+								<label for="password">Password</label>
+							</div>
+							<div class="col s2">
+								
+								<button type="submit" class="waves-effect waves-light btn blue lighten-2 text-white">Log In</button>
+							</div>
 						</div>
-						<div class="input-field col s5">
-							<input name="password" id="password" type="password" class="validate">
-							<label for="password">Password</label>
-						</div>
-						<div class="col s2">
-							
-					<a class="waves-effect waves-light btn blue lighten-2 text-white">Log In</a>
-						</div>
-					</div>
-				</form>
-			</div>
+					</form>
+				</div>
 				<div class="container">
 					<i class="material-icons">comment</i>
 					<h5>See what’s happening in <br> the world right now</h5>
@@ -40,9 +40,9 @@
 					<br>
 					<a href="" class="btn white blue-text">Log In</a>
 				</div>
-			<div class="col s2"></div>
+				<div class="col s2"></div>
 			</div>
-			</div>
-			
 		</div>
+		
+	</div>
 {% endblock %}

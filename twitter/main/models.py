@@ -9,7 +9,7 @@ from django.dispatch import receiver
 
 class Profile(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
-	img = models.URLField(default=None, null=True, blank=True)
+	img = models.ImageField(upload_to='media/images/',default=None, null=True, blank=True)
 	bio = models.TextField(max_length=500, blank=True)
 	birth_date = models.DateField(null=True, blank=True)
 
@@ -32,3 +32,12 @@ class TweetComment(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
 	timestamp = models.DateTimeField(default=timezone.now)
 	tweet = models.ForeignKey(Tweet, on_delete=models.CASCADE)
+
+class TweetMedia(models.Model):
+	tweet = models.ForeignKey(Tweet, on_delete=models.CASCADE)
+	img = models.ImageField(upload_to='media/images/',default=None, null=True, blank=True)
+
+class Follow(models.Model):
+	follower = models.ForeignKey(User, on_delete=models.CASCADE, related_name='follower')
+	followee = models.ForeignKey(User, on_delete=models.CASCADE, related_name='followee')
+	timestamp = models.DateTimeField(default=timezone.now)

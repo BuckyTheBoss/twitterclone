@@ -13,7 +13,10 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 </head>
 <body>
-
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('.sidenav').sidenav();
+  });</script>
             
 
   <title>{% block title %}{% endblock %}</title>
@@ -21,7 +24,7 @@
 
 <nav class="white">
     <div class="nav-wrapper">
-      <a href="" class="brand-logo blue-text text-lighten-2 ">
+      <a href="{% url 'index'%}" class="brand-logo blue-text text-lighten-2 ">
   <i class="material-icons">comment</i>
             Twitter</a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
@@ -31,10 +34,10 @@
           <span class="nav-item text-light font-weight-bold">{{ request.user.username | capfirst }}</span>
         </div>
           <li>
-          <a class="nav-item nav-link" href="{% url 'main_logout' %}">Log Out</a>
+          <a class="nav-item nav-link blue-text text-lighten-2" href="{% url 'main_logout' %}">Log Out</a>
         </li>
       {% else %}
-        <a class="nav-item nav-link" href="{% url 'main_login' %}">Have an account? Log In</a>
+        <a class="nav-item nav-link blue-text text-lighten-2" href="{% url 'main_login' %}">Have an account? Log In</a>
       {% endif %}</li>
       </ul>
     </div>
